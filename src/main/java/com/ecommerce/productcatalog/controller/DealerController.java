@@ -27,14 +27,26 @@ public class DealerController
     {
         return new ResponseEntity<>(dealerService.addDealer(dealer),HttpStatus.CREATED);
     }
+
     @GetMapping("/check/email/{email}")
-    public void checkDealerByEmail(@PathVariable String email) {
+    public ResponseEntity<String> checkDealerByEmail(@PathVariable String email) {
         boolean exists = dealerService.findDealerByEmail(email);
 
-        if (exists) {
-            System.out.println(" Dealer found with email: " + email);
-        } else {
-            System.out.println(" No dealer found with email: " + email);
+        if (exists)
+        {
+            return ResponseEntity.ok(" Dealer found with email: " + email);
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(" No dealer found with email: " + email);
         }
     }
+
+    @GetMapping("/available/dealers/{category}")
+    public ResponseEntity<List<Dealer>> fetchDealersByProdCategory(@PathVariable String category)
+    {
+        return new ResponseEntity<>(dealerService.getDealersByProdCategory(category), HttpStatus.OK);
+    }
+
+
 }

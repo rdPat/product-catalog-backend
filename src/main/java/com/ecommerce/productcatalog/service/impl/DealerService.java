@@ -32,5 +32,10 @@ public class DealerService
        return dealerRepo.findByEmail(email).isPresent();
    }
 
+   public List<Dealer> getDealersByProdCategory(String category)
+   {
+       return dealerRepo.findByProductCategory(category);
+   }
+
 
 }
